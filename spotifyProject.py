@@ -98,7 +98,7 @@ def read_data(file):
     for x in ['Duration', 'Tempo', 'Key', 'Loudness', 'Instrumentalness', 'Mode', 'Liveness']:
         del transform[x]
     transform = transform.astype('float')
-    return transform
+    return (dataset, transform)
 
 #Inertia
 def get_inertia(data):
@@ -106,7 +106,7 @@ def get_inertia(data):
     inertia = []
     for x in clusters:
         kmeans = KMeans(n_clusters=x)
-        kmeans.fit(data)
+        kmeans.fit(data[1])
         inertia.append(kmeans.inertia_)
     plt.scatter(clusters, inertia)
     plt.savefig('/Users/matthewli/Documents/GitHub/SpotifyProject/Media/inertia.png')
@@ -114,7 +114,7 @@ def get_inertia(data):
 
 #PCA
 def pca(data):
-    transform = preprocessing.scale(data, with_std=False)
+    transform = preprocessing.scale(data[1], with_std=False)
     pca = decomposition.PCA(n_components = 3)
     pca.fit(transform)
     pcatransform = pca.transform(transform)
@@ -129,15 +129,15 @@ def pca(data):
     plt.xlabel("Principal Component 1")
     plt.ylabel("Principal Component 2")
     plt.savefig('/Users/matthewli/Documents/GitHub/SpotifyProject/Media/pca.png')
-    data['Clusters'] = pcalabels
-    data.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Spotify_PCA.csv')
+    data[0]['Clusters'] = pcalabels
+    data[0].to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Spotify_PCA.csv')
     plt.clf()
 
 #Predict
 def knn(data):
-    x = data.iloc[:, :-1]
+    x = data[1].iloc[:, :-1]
     print(x)
-    y = data.iloc[:, 5]
+    y = data[1].iloc[:, 5]
     print(y)
     x = x.astype('float')
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20)
