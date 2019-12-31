@@ -2,7 +2,7 @@ library(ggplot2)
 library(gridExtra)
 library(nnet)
 
-total = read.csv('/Users/matthewli/Documents/Spotify Project/Spotify_PCA.csv')
+total = read.csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Spotify_PCA.csv')
 print(total[total$Clusters == 0,])
 print(total[order(total$Valence),])
 attach(total)
@@ -28,17 +28,15 @@ ggplot(data=total[total$Clusters == 2,]) + geom_bar(aes(x=as.factor(Key), fill=a
 overall = function(cluster, col) {
   p1 = ggplot(data=cluster, aes(x=cluster$Energy)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Energy') + 
     geom_density(color = col, fill=col, alpha=0.1) + geom_vline(data=cluster, aes(xintercept=mean(cluster$Energy)), color=col, linetype="dashed")
-  p2 = ggplot(data=cluster, aes(x=cluster$Liveness)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Liveness') + 
-    geom_density(color = col, fill=col, alpha=0.1) + geom_vline(data=cluster, aes(xintercept=mean(cluster$Liveness)), color=col, linetype="dashed")
-  p3 = ggplot(data=cluster, aes(x=cluster$Speechiness)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Speechiness') + 
+  p2 = ggplot(data=cluster, aes(x=cluster$Speechiness)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Speechiness') + 
     geom_density(color = col, fill=col, alpha=0.1) + geom_vline(data=cluster, aes(xintercept=mean(cluster$Speechiness)), color=col, linetype="dashed")
-  p4 = ggplot(data=cluster, aes(x=cluster$Acousticness)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Acousticness') + 
+  p3 = ggplot(data=cluster, aes(x=cluster$Acousticness)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Acousticness') + 
     geom_density(color = col, fill=col, alpha=0.1) + geom_vline(data=cluster, aes(xintercept=mean(cluster$Acousticness)), color=col, linetype="dashed")
-  p5 = ggplot(data=cluster, aes(x=cluster$Danceability)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Danceability') + 
+  p4 = ggplot(data=cluster, aes(x=cluster$Danceability)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Danceability') + 
     geom_density(color = col, fill=col, alpha=0.1) + geom_vline(data=cluster, aes(xintercept=mean(cluster$Danceability)), color=col, linetype="dashed")
-  p6 = ggplot(data=cluster, aes(x=cluster$Valence)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Valence') + 
+  p5 = ggplot(data=cluster, aes(x=cluster$Valence)) + geom_histogram(aes(y=..density..), color='black', fill='white') + xlab('Valence') + 
     geom_density(color = col, fill=col, alpha=0.1) + geom_vline(data=cluster, aes(xintercept=mean(cluster$Valence)), color=col, linetype="dashed")
-  grid.arrange(p1, p2, p3, p4, p5, p6, ncol=3, nrow=2)
+  grid.arrange(p1, p2, p3, p4, p5, ncol=3, nrow=2)
 }
 overall(total, 'turquoise')
 overall(total[Clusters == 0,], 'orange')
