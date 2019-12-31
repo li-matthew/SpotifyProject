@@ -61,7 +61,7 @@ def get_my_songs():
                                  'Acousticness', 'Instrumentalness', 'Danceability', 'Key', 'Duration', 'Loudness',
                                  'Valence', 'Mode'])
     data = data.drop_duplicates(subset=['Artist', 'Name'], keep='first')
-    data.to_csv('/Users/matthewli/Documents/Spotify Project/Spotify.csv')
+    data.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Spotify.csv')
 
 #Extra Data
 def get_top_songs():
@@ -69,26 +69,26 @@ def get_top_songs():
     my2016 = get_playlist_tracks('1256293535', '37i9dQZF1CyWPoeKJeEUem', 'my2016')
     mytop = mytop + my2016
     my2016 = pd.DataFrame(my2016, columns=['Artist', 'Name', 'ID', 'Playlist', 'Energy', 'Liveness', 'Tempo', 'Speechiness', 'Acousticness', 'Instrumentalness', 'Danceability', 'Key', 'Duration', 'Loudness', 'Valence', 'Mode'])
-    my2016.to_csv('/Users/matthewli/Documents/Spotify Project/My2016.csv')
+    my2016.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/My2016.csv')
 
     my2017 = get_playlist_tracks('1256293535', '37i9dQZF1E9QuqoF4pvCjO', 'my2017')
     mytop = mytop + my2017
     my2017 = pd.DataFrame(my2017, columns=['Artist', 'Name', 'ID', 'Playlist', 'Energy', 'Liveness', 'Tempo', 'Speechiness', 'Acousticness', 'Instrumentalness', 'Danceability', 'Key', 'Duration', 'Loudness', 'Valence', 'Mode'])
-    my2017.to_csv('/Users/matthewli/Documents/Spotify Project/My2017.csv')
+    my2017.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/My2017.csv')
 
     my2018 = get_playlist_tracks('1256293535', '37i9dQZF1EjofvKv8uxeuM', 'my2018')
     mytop = mytop + my2018
     my2018 = pd.DataFrame(my2018, columns=['Artist', 'Name', 'ID', 'Playlist', 'Energy', 'Liveness', 'Tempo', 'Speechiness', 'Acousticness', 'Instrumentalness', 'Danceability', 'Key', 'Duration', 'Loudness', 'Valence', 'Mode'])
-    my2018.to_csv('/Users/matthewli/Documents/Spotify Project/My2018.csv')
+    my2018.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/My2018.csv')
 
     my2019 = get_playlist_tracks('1256293535', '37i9dQZF1Et8A31ON5uKGj', 'my2019')
     mytop = mytop + my2019
     my2019 = pd.DataFrame(my2019, columns=['Artist', 'Name', 'ID', 'Playlist', 'Energy', 'Liveness', 'Tempo', 'Speechiness', 'Acousticness', 'Instrumentalness', 'Danceability', 'Key', 'Duration', 'Loudness', 'Valence', 'Mode'])
-    my2019.to_csv('/Users/matthewli/Documents/Spotify Project/My2019.csv')
+    my2019.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/My2019.csv')
 
     mytop = pd.DataFrame(mytop, columns=['Artist', 'Name', 'ID', 'Playlist', 'Energy', 'Liveness', 'Tempo', 'Speechiness', 'Acousticness', 'Instrumentalness', 'Danceability', 'Key', 'Duration', 'Loudness', 'Valence', 'Mode'])
     mytop = mytop.drop_duplicates(subset=['Artist', 'Name'], keep='first')
-    mytop.to_csv('/Users/matthewli/Documents/Spotify Project/MyTop.csv')
+    mytop.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/MyTop.csv')
 
 #Read Data
 def read_data(file):
@@ -109,7 +109,7 @@ def get_inertia(data):
         kmeans.fit(data)
         inertia.append(kmeans.inertia_)
     plt.scatter(clusters, inertia)
-    plt.savefig('/Users/matthewli/Documents/Spotify Project/inertia.png')
+    plt.savefig('/Users/matthewli/Documents/GitHub/SpotifyProject/Media/inertia.png')
     plt.clf()
 
 #PCA
@@ -128,9 +128,9 @@ def pca(data):
     plt.scatter(pcacenters[:, 0], pcacenters[:, 1], c='black', s=200, alpha=0.5);
     plt.xlabel("Principal Component 1")
     plt.ylabel("Principal Component 2")
-    plt.savefig('/Users/matthewli/Documents/Spotify Project/pca.png')
+    plt.savefig('/Users/matthewli/Documents/GitHub/SpotifyProject/Media/pca.png')
     data['Clusters'] = pcalabels
-    data.to_csv('/Users/matthewli/Documents/Spotify Project/Spotify_PCA.csv')
+    data.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Spotify_PCA.csv')
     plt.clf()
 
 #Predict
@@ -159,7 +159,7 @@ def knn(data):
         error.append(np.mean(y_pred != y_test))
     plt.scatter(k_range, error)
     plt.plot(k_range, error)
-    plt.savefig('/Users/matthewli/Documents/Spotify Project/KNN_Error.png')
+    plt.savefig('/Users/matthewli/Documents/GitHub/SpotifyProject/Media/KNN_Error.png')
 
     plt.clf()
 
@@ -171,7 +171,7 @@ def knn(data):
     confusion = confusion_matrix(y_test, y_pred)
     print(confusion)
     sn.heatmap(confusion)
-    plt.savefig('/Users/matthewli/Documents/Spotify Project/Confusion_Matrix.png')
+    plt.savefig('/Users/matthewli/Documents/GitHub/SpotifyProject/Media/Confusion_Matrix.png')
     print(classification_report(y_test, y_pred))
 
     #Predicting
@@ -187,11 +187,11 @@ def knn(data):
         print(predictvalues)
         print(knn.predict(predictvalues.values.tolist()))
         predictdata['Predict'] = knn.predict(predictvalues.values.tolist())
-    predictdata.to_csv('/Users/matthewli/Documents/Spotify Project/Predict.csv')
+    predictdata.to_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Predict.csv')
 
 #Create Playlist
 def create_playlist():
-    data = pd.read_csv('/Users/matthewli/Documents/Spotify Project/Spotify_PCA.csv')
+    data = pd.read_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Spotify_PCA.csv')
     for x in data.loc[data['Clusters'] == 0]['ID']:
         print(x)
         spotify.user_playlist_add_tracks('1256293535', '00W1ZozOzYbVMVYvmE8CL5', [x])
@@ -204,7 +204,7 @@ def create_playlist():
 
 #Add to Playlist
 def add_to_playlist():
-    predictdata = pd.read_csv('/Users/matthewli/Documents/Spotify Project/Predict.csv')
+    predictdata = pd.read_csv('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Predict.csv')
     if len(predictdata) > 0:
         for x in predictdata.loc[predictdata['Predict'] == 0]['ID']:
             print(x)
@@ -220,9 +220,7 @@ def add_to_playlist():
             spotify.user_playlist_remove_all_occurrences_of_tracks('1256293535', '4ttw16DvJncoO4aY4c7wmU', [x])
 
 get_my_songs()
-pcadata = read_data('/Users/matthewli/Documents/Spotify Project/Spotify.csv')
+pcadata = read_data('/Users/matthewli/Documents/GitHub/SpotifyProject/Data/Spotify.csv')
 pca(pcadata)
 knn(pcadata)
 add_to_playlist()
-
-
